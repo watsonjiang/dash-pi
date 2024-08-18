@@ -1,11 +1,12 @@
 import { Button } from "antd";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 /**
  * overview 页面
  * @returns
  */
 const Overview: React.FC = () => {
+  const now = new Date();
   const [load1m, setLoad1m] = useState(Math.random());
   const [load5m, setLoad5m] = useState(Math.random());
   const [load10m, setLoad10m] = useState(Math.random());
@@ -19,14 +20,19 @@ const Overview: React.FC = () => {
     []
   );
 
+  useEffect(() => {
+    const intervalId = setInterval(refresh, 3000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [refresh]);
+
   return (
     <>
+      <p>time: {now.toString()}</p>
       <p>
         load average: {load1m} {load5m} {load10m}
       </p>
-      <Button type="primary" onClick={refresh}>
-        Refresh
-      </Button>
     </>
   );
 };
