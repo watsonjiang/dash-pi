@@ -1,21 +1,27 @@
-import { Button } from "antd";
 import { useCallback, useEffect, useState } from "react";
+import { getLoadAvg } from "../api";
 
 /**
  * overview 页面
- * @returns
  */
 const Overview: React.FC = () => {
   const now = new Date();
-  const [load1m, setLoad1m] = useState(Math.random());
-  const [load5m, setLoad5m] = useState(Math.random());
-  const [load10m, setLoad10m] = useState(Math.random());
+  const [load1m, setLoad1m] = useState(-1);
+  const [load5m, setLoad5m] = useState(-1);
+  const [load10m, setLoad10m] = useState(-1);
 
   const refresh = useCallback(
     (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      setLoad1m(Math.random());
-      setLoad5m(Math.random());
-      setLoad10m(Math.random());
+      getLoadAvg()
+        .then((rsp) => {
+          const rst = rsp.data.data;
+          setLoad1m(rst.load1m);
+          setLoad5m(rst.load5m);
+          setLoad10m(rst.load10m);
+        })
+        .catch(() => {
+          //忽略异常, 框架已经有提示了.
+        });
     },
     []
   );
