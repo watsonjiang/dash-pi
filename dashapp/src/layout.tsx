@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const dashRouter = createBrowserRouter([
   {
-    path: "/",
+    path: "/overview",
     element: <Overview />,
   },
   {

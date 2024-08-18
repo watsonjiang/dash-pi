@@ -1,0 +1,11 @@
+[project]
+name = "dashpi"
+version = "1.0.0"
+description = "The dashboard for pi"
+dependencies = [
+    "flask",
+]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
