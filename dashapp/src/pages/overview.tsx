@@ -10,21 +10,20 @@ const Overview: React.FC = () => {
   const [load5m, setLoad5m] = useState(-1);
   const [load10m, setLoad10m] = useState(-1);
 
-  const refresh = useCallback(
-    (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      getLoadAvg()
-        .then((rsp) => {
-          const rst = rsp.data.data;
-          setLoad1m(rst.load1m);
-          setLoad5m(rst.load5m);
-          setLoad10m(rst.load10m);
-        })
-        .catch(() => {
-          //忽略异常, 框架已经有提示了.
-        });
-    },
-    []
-  );
+  const refresh = useCallback(() => {
+    const p = async () => {
+      try {
+        const loadAvg = await getLoadAvg();
+        setLoad1m(loadAvg.load1m);
+        setLoad5m(loadAvg.load5m);
+        setLoad10m(loadAvg.load10m);
+      } catch (e: any) {
+        //忽略异常, 框架已经有提示了.
+      }
+    };
+
+    p();
+  }, []);
 
   useEffect(() => {
     const intervalId = setInterval(refresh, 3000);

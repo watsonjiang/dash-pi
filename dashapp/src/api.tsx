@@ -70,20 +70,28 @@ export type PageResult<T> = {
   records: T[];
 };
 
-export function getAction<T>(url: string, params?: any) {
-  return ajax.get<RestResponse<T>>(url, { params } as AxiosRequestConfig);
+export async function getAction<T>(url: string, params?: any) {
+  return ajax.get<RestResponse<T>>(url, {
+    params: params,
+  } as AxiosRequestConfig);
 }
 
-export function postAction<T>(url: string, param: any) {
-  return ajax.post<RestResponse<T>>(url, param);
+export async function postAction<T>(url: string, params?: any) {
+  return ajax.post<RestResponse<T>>(url, {
+    params: params,
+  } as AxiosRequestConfig);
 }
 
-export function putAction<T>(url: string, param: any) {
-  return ajax.put<RestResponse<T>>(url, param);
+export async function putAction<T>(url: string, params?: any) {
+  return ajax.put<RestResponse<T>>(url, {
+    params: params,
+  } as AxiosRequestConfig);
 }
 
-export function deleteAction<T>(url: string, param: any) {
-  return ajax.delete<RestResponse<T>>(url, param);
+export async function deleteAction<T>(url: string, params?: any) {
+  return ajax.delete<RestResponse<T>>(url, {
+    params: params,
+  } as AxiosRequestConfig);
 }
 
 //----------api方法-------
@@ -92,4 +100,8 @@ export type LoadAvgDto = {
   load5m: number;
   load10m: number;
 };
-export const getLoadAvg = () => getAction<LoadAvgDto>("/loadavg");
+
+export const getLoadAvg = async (): Promise<LoadAvgDto> => {
+  const rsp = await getAction<LoadAvgDto>("/loadavg");
+  return rsp.data.data;
+};
