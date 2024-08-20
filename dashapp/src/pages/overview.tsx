@@ -16,7 +16,7 @@ const Overview: React.FC = () => {
         const loadAvg = await getLoadAvg();
         setLoad1m(loadAvg.load1m);
         setLoad5m(loadAvg.load5m);
-        setLoad10m(loadAvg.load10m);
+        setLoad10m(loadAvg.load15m);
       } catch (e: any) {
         //忽略异常, 框架已经有提示了.
       }

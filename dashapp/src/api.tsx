@@ -98,7 +98,7 @@ export async function deleteAction<T>(url: string, params?: any) {
 export type LoadAvgDto = {
   load1m: number;
   load5m: number;
-  load10m: number;
+  load15m: number;
 };
 
 export const getLoadAvg = async (): Promise<LoadAvgDto> => {
