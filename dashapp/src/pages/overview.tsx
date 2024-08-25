@@ -1,5 +1,29 @@
 import { useCallback, useEffect, useState } from "react";
 import { getLoadAvg } from "../api";
+import { Gauge } from "@ant-design/charts";
+
+const LoadGauge1: React.FC = () => {
+  const config = {
+    title: {
+      visible: true,
+      text: "刻度仪表盘",
+    },
+    width: 400,
+    height: 400,
+    value: 40,
+    min: 0,
+    max: 100,
+    range: [0, 25, 50, 75, 100],
+    statistic: {
+      visible: true,
+      text: "良",
+      color: "#faad14",
+    },
+    color: ["#39B8FF", "#52619B", "#43E089", "#C0EDF3"],
+  };
+
+  return <Gauge {...config} />;
+};
 
 /**
  * overview 页面
@@ -38,6 +62,7 @@ const Overview: React.FC = () => {
       <p>
         load average: {load1m} {load5m} {load10m}
       </p>
+      <LoadGauge1></LoadGauge1>
     </>
   );
 };

@@ -16,8 +16,8 @@ def create_app(test_config=None):
 
     app.register_error_handler(DashException, handle_dash_exc)
 
-    from . import loadavg
-    app.register_blueprint(loadavg.bp)
+    from . import metrics
+    app.register_blueprint(metrics.bp)
 
     @app.route('/static/js/<path:path>')
     def js(path):
