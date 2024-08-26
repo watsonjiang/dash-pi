@@ -1,7 +1,8 @@
 import { Overview } from "./pages/overview";
 import { CpuDetail } from "./pages/cpu";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import AppBar from "@mui/material/AppBar";
+import Drawer from "@mui/material/Drawer";
 import {
   AppBarProps,
   Badge,
@@ -33,9 +34,13 @@ const dashTheme = createTheme();
 
 const drawerWidth: number = 240;
 
-const AppBar = styled(MuiAppBar, {
+interface DashAppBarProps extends AppBarProps {
+  open?: boolean;
+}
+
+const DashAppBar = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme, open }) => ({
+})<DashAppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -51,13 +56,42 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+const DashDrawer = styled(Drawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  "& .MuiDrawer-paper": {
+    position: "relative",
+    whiteSpace: "nowrap",
+    width: drawerWidth,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    boxSizing: "border-box",
+    ...(!open && {
+      overflowX: "hidden",
+      transition: theme.transitions.create("width", {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      width: theme.spacing(7),
+      [theme.breakpoints.up("sm")]: {
+        width: theme.spacing(9),
+      },
+    }),
+  },
+}));
+
 const DashLayout: React.FC = () => {
   const [open, setOpen] = useState(true);
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
   return (
     <ThemeProvider theme={dashTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="absolute" open={true}>
+        <DashAppBar position="absolute" open={true}>
           <Toolbar sx={{ pr: "24px" }}>
             <IconButton
               edge="start"
@@ -82,7 +116,7 @@ const DashLayout: React.FC = () => {
               </Badge>
             </IconButton>
           </Toolbar>
-        </AppBar>
+        </DashAppBar>
       </Box>
     </ThemeProvider>
   );
