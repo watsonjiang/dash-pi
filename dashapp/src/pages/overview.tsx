@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { getLoadAvg } from "../api";
-import { Gauge } from "@ant-design/charts";
 
 const LoadGauge1: React.FC = () => {
   const config = {
@@ -22,7 +21,7 @@ const LoadGauge1: React.FC = () => {
     color: ["#39B8FF", "#52619B", "#43E089", "#C0EDF3"],
   };
 
-  return <Gauge {...config} />;
+  return <></>;
 };
 
 /**

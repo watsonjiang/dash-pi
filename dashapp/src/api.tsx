@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { message } from "antd";
 import React from "react";
+import { Alert } from "@mui/material";
 
 const BASE_URL = "/api";
 
@@ -24,7 +24,7 @@ ajax.interceptors.request.use(
     return config;
   },
   (error) => {
-    message.error("请求后端接口异常");
+    console.log("请求后端接口异常");
     Promise.reject(error);
   }
 );
@@ -39,10 +39,10 @@ ajax.interceptors.response.use(
       const value = error.response.data;
       if (typeof value === "string" || value instanceof String) {
         //字符型错误.
-        message.error(<span>错误. {error?.response.data}</span>);
+        console.log(<span>错误. {error?.response.data}</span>);
       } else {
         //json对象.
-        message.error(
+        console.log(
           <span>
             错误. {value?.msg} {JSON.stringify(value?.data)}
           </span>
@@ -50,7 +50,7 @@ ajax.interceptors.response.use(
       }
       return Promise.reject(error);
     }
-    message.error("未知错误");
+    console.log("未知错误");
     return Promise.reject(error);
   }
 );

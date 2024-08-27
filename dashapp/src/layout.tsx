@@ -7,9 +7,15 @@ import {
   AppBarProps,
   Badge,
   Box,
+  Container,
   createTheme,
   CssBaseline,
+  Divider,
+  Grid,
   IconButton,
+  Link,
+  List,
+  Paper,
   ThemeProvider,
   Toolbar,
   Typography,
@@ -17,7 +23,9 @@ import {
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useState } from "react";
+import { mainListItems, secondaryListItems } from "./menu";
 
 const dashRouter = createBrowserRouter([
   {
@@ -31,6 +39,24 @@ const dashRouter = createBrowserRouter([
 ]);
 
 const dashTheme = createTheme();
+
+function Copyright(props: any) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
 const drawerWidth: number = 240;
 
@@ -91,13 +117,14 @@ const DashLayout: React.FC = () => {
     <ThemeProvider theme={dashTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <DashAppBar position="absolute" open={true}>
+        <DashAppBar position="absolute" open={open}>
           <Toolbar sx={{ pr: "24px" }}>
             <IconButton
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              sx={{ marginRight: "36px" }}
+              onClick={toggleDrawer}
+              sx={{ marginRight: "36px", ...(open && { display: "none" }) }}
             >
               <MenuIcon />
             </IconButton>
@@ -117,6 +144,77 @@ const DashLayout: React.FC = () => {
             </IconButton>
           </Toolbar>
         </DashAppBar>
+        <DashDrawer variant="permanent" open={open}>
+          <Toolbar
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              px: [1],
+            }}
+          >
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </Toolbar>
+          <Divider />
+          <List component="nav">
+            {mainListItems}
+            <Divider sx={{ my: 1 }} />
+            {secondaryListItems}
+          </List>
+        </DashDrawer>
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+          }}
+        >
+          <Toolbar />
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+              {/* Chart */}
+              <Grid item xs={12} md={8} lg={9}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 240,
+                  }}
+                >
+                  <p> Chart </p>
+                </Paper>
+              </Grid>
+              {/* Recent Deposits */}
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 240,
+                  }}
+                >
+                  <p> Deposits </p>
+                </Paper>
+              </Grid>
+              {/* Recent Orders */}
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  <p> Orders </p>
+                </Paper>
+              </Grid>
+            </Grid>
+            <Copyright sx={{ pt: 4 }} />
+          </Container>
+        </Box>
       </Box>
     </ThemeProvider>
   );
