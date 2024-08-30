@@ -4,9 +4,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Drawer from "@mui/material/Drawer";
 import {
+  Alert,
   AppBarProps,
   Badge,
   Box,
+  Button,
   Container,
   createTheme,
   CssBaseline,
@@ -26,6 +28,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useState } from "react";
 import { mainListItems, secondaryListItems } from "./menu";
+import { useDashSelector } from "./store";
+import { getLoadAvg } from "./api";
 
 const dashRouter = createBrowserRouter([
   {
@@ -108,11 +112,26 @@ const DashDrawer = styled(Drawer, {
   },
 }));
 
+const onClick = () => {
+  const p = async () => {
+    try {
+      const loadAvg = await getLoadAvg();
+    } catch (e: any) {
+      //忽略异常, 框架已经有提示了.
+    }
+  };
+
+  p();
+};
+
 const DashLayout: React.FC = () => {
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const dashAlertState = useDashSelector((state) => state.alert);
+
   return (
     <ThemeProvider theme={dashTheme}>
       <Box sx={{ display: "flex" }}>
@@ -190,6 +209,7 @@ const DashLayout: React.FC = () => {
                   }}
                 >
                   <p> Chart </p>
+                  <Alert>{dashAlertState.text}</Alert>
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
@@ -203,6 +223,7 @@ const DashLayout: React.FC = () => {
                   }}
                 >
                   <p> Deposits </p>
+                  <Button onClick={onClick}> OK </Button>
                 </Paper>
               </Grid>
               {/* Recent Orders */}
