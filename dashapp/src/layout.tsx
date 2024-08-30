@@ -18,6 +18,7 @@ import {
   Link,
   List,
   Paper,
+  Snackbar,
   ThemeProvider,
   Toolbar,
   Typography,
@@ -130,8 +131,6 @@ const DashLayout: React.FC = () => {
     setOpen(!open);
   };
 
-  const dashAlertState = useDashSelector((state) => state.alert);
-
   return (
     <ThemeProvider theme={dashTheme}>
       <Box sx={{ display: "flex" }}>
@@ -209,7 +208,6 @@ const DashLayout: React.FC = () => {
                   }}
                 >
                   <p> Chart </p>
-                  <Alert>{dashAlertState.text}</Alert>
                 </Paper>
               </Grid>
               {/* Recent Deposits */}

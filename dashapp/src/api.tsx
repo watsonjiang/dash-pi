@@ -1,8 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
-import React from "react";
-import { Alert } from "@mui/material";
-import { alertEv, useDashDispatch } from "./store";
 import { Store } from "@reduxjs/toolkit";
+import { enqueueSnackbar } from "notistack";
 
 const BASE_URL = "/api";
 
@@ -18,43 +16,43 @@ const ajax = axios.create({
   timeout: 10000, // 请求超时时间 10s
 });
 
-export function setupAxios(store: Store) {
-  // request拦截器
-  ajax.interceptors.request.use(
-    (config) => {
-      config.headers["Accept"] = "*/*";
-      config.headers["X-Requested-With"] = "XMLHttpRequest";
-      return config;
-    },
-    (error) => {
-      store.dispatch(alertEv("请求后端接口异常"));
-      Promise.reject(error);
-    }
-  );
-  // response 拦截器
-  ajax.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    (error) => {
-      if (error?.response) {
-        const value = error.response.data;
-        if (typeof value === "string" || value instanceof String) {
-          //字符型错误.
-          store.dispatch(alertEv("错误. " + error?.response.data));
-        } else {
-          //json对象.
-          store.dispatch(
-            alertEv("错误." + value?.msg + " " + JSON.stringify(value?.data))
-          );
-        }
-        return Promise.reject(error);
+const alert = (msg: string) => {
+  enqueueSnackbar(msg, { variant: "error", preventDuplicate: false });
+};
+
+// request拦截器
+ajax.interceptors.request.use(
+  (config) => {
+    config.headers["Accept"] = "*/*";
+    config.headers["X-Requested-With"] = "XMLHttpRequest";
+    return config;
+  },
+  (error) => {
+    alert("请求后端接口异常");
+    Promise.reject(error);
+  }
+);
+// response 拦截器
+ajax.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error?.response) {
+      const value = error.response.data;
+      if (typeof value === "string" || value instanceof String) {
+        //字符型错误.
+        alert("错误. " + error?.response.data);
+      } else {
+        //json对象.
+        alert("错误." + value?.msg + " " + JSON.stringify(value?.data));
       }
-      store.dispatch(alertEv("未知错误."));
       return Promise.reject(error);
     }
-  );
-}
+    alert("未知错误.");
+    return Promise.reject(error);
+  }
+);
 
 //列数据请求
 export type ListDataReq<T> = {

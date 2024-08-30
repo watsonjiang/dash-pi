@@ -2,17 +2,13 @@ import React from "react";
 import "./app.css";
 
 import DashLayout from "./layout";
-import { Provider } from "react-redux";
-import { store } from "./store";
-import { setupAxios } from "./api";
-
-setupAxios(store);
+import { SnackbarProvider } from "notistack";
 
 function App() {
   return (
-    <Provider store={store}>
+    <SnackbarProvider>
       <DashLayout />
-    </Provider>
+    </SnackbarProvider>
   );
 }
 
