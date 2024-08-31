@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { Store } from "@reduxjs/toolkit";
 import { enqueueSnackbar } from "notistack";
 
 const BASE_URL = "/api";
@@ -17,7 +16,10 @@ const ajax = axios.create({
 });
 
 const alert = (msg: string) => {
-  enqueueSnackbar(msg, { variant: "error", preventDuplicate: false });
+  enqueueSnackbar(msg, {
+    variant: "error",
+    preventDuplicate: false,
+  });
 };
 
 // request拦截器

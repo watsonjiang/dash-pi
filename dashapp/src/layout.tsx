@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Drawer from "@mui/material/Drawer";
 import {
-  Alert,
   AppBarProps,
   Badge,
   Box,
@@ -18,7 +17,6 @@ import {
   Link,
   List,
   Paper,
-  Snackbar,
   ThemeProvider,
   Toolbar,
   Typography,
@@ -29,7 +27,6 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useState } from "react";
 import { mainListItems, secondaryListItems } from "./menu";
-import { useDashSelector } from "./store";
 import { getLoadAvg } from "./api";
 
 const dashRouter = createBrowserRouter([

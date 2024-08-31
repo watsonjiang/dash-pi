@@ -6,7 +6,7 @@ import { SnackbarProvider } from "notistack";
 
 function App() {
   return (
-    <SnackbarProvider>
+    <SnackbarProvider anchorOrigin={{ horizontal: "center", vertical: "top" }}>
       <DashLayout />
     </SnackbarProvider>
   );
