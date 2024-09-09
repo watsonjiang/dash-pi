@@ -4,26 +4,32 @@ dashboard for raspberry pi
 
 # architecture
 
-- reactjs + antd
+- reactjs + mui
 - flask
 
-# build
+# dashapp 
 
-- dashapp
+- 构建
 
 ```
 dashapp> yarn build
 ```
 
-- dashsvr
+- 启动
+```
+DANGEROUSLY_DISABLE_HOST_CHECK=true yarn start
+```
 
+# dashsvr
+
+- 构建
 ```
 dashsvr> cp -r ../dashapp/build/* dashpi/static
 dashsvr> python -m build --wheel
 ```
 
-# install
+- 启动
 
 ```
-pip install dashpi-1.0.0-py2.py3-none-any.whl
+flask --app dashpi run
 ```
