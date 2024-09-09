@@ -1,27 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
-import { getLoadAvg } from "../api";
+import { getLoadAvg, LoadAvgDto } from "../api";
+import { Stack } from "@mui/material";
+import { Gauge } from "@mui/x-charts";
 
-const LoadGauge1: React.FC = () => {
-  const config = {
-    title: {
-      visible: true,
-      text: "刻度仪表盘",
-    },
-    width: 400,
-    height: 400,
-    value: 40,
-    min: 0,
-    max: 100,
-    range: [0, 25, 50, 75, 100],
-    statistic: {
-      visible: true,
-      text: "良",
-      color: "#faad14",
-    },
-    color: ["#39B8FF", "#52619B", "#43E089", "#C0EDF3"],
-  };
+type LoadGaugeProps = {
+  load?: LoadAvgDto;
+};
 
-  return <></>;
+const LoadGauge: React.FC<LoadGaugeProps> = (props) => {
+  return (
+    <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 1, md: 3 }}>
+      <Gauge width={100} height={100} value={props.load?.load1m} />
+      <Gauge width={100} height={100} value={props.load?.load5m} />
+      <Gauge width={100} height={100} value={props.load?.load15m} />
+    </Stack>
+  );
 };
 
 /**
@@ -29,17 +22,13 @@ const LoadGauge1: React.FC = () => {
  */
 const Overview: React.FC = () => {
   const now = new Date();
-  const [load1m, setLoad1m] = useState(-1);
-  const [load5m, setLoad5m] = useState(-1);
-  const [load10m, setLoad10m] = useState(-1);
+  const [loadAvg, setLoadAvg] = useState<LoadAvgDto>();
 
   const refresh = useCallback(() => {
     const p = async () => {
       try {
         const loadAvg = await getLoadAvg();
-        setLoad1m(loadAvg.load1m);
-        setLoad5m(loadAvg.load5m);
-        setLoad10m(loadAvg.load15m);
+        setLoadAvg(loadAvg);
       } catch (e: any) {
         //忽略异常, 框架已经有提示了.
       }
@@ -59,9 +48,9 @@ const Overview: React.FC = () => {
     <>
       <p>time: {now.toString()}</p>
       <p>
-        load average: {load1m} {load5m} {load10m}
+        load average: {loadAvg?.load1m} {loadAvg?.load5m} {loadAvg?.load15m}
       </p>
-      <LoadGauge1></LoadGauge1>
+      <LoadGauge load={loadAvg}></LoadGauge>
     </>
   );
 };

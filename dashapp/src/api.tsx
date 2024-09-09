@@ -103,6 +103,17 @@ export type LoadAvgDto = {
 };
 
 export const getLoadAvg = async (): Promise<LoadAvgDto> => {
-  const rsp = await getAction<LoadAvgDto>("/loadavg");
+  const rsp = await getAction<LoadAvgDto>("/load_avg");
+  return rsp.data.data;
+};
+
+export type CpuTimeDto = {
+  user: number;
+  system: number;
+  idle: number;
+};
+
+export const getCpuTimes = async (): Promise<CpuTimeDto> => {
+  const rsp = await getAction<CpuTimeDto>("/cpu_times");
   return rsp.data.data;
 };
