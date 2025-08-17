@@ -26,17 +26,6 @@ import { useState } from "react";
 import { mainListItems } from "./menu";
 import { getLoadAvg } from "./api";
 
-const dashRouter = createBrowserRouter([
-  {
-    path: "/overview",
-    element: <Overview />,
-  },
-  {
-    path: "/cpu",
-    element: <CpuDetail />,
-  },
-]);
-
 const dashTheme = createTheme();
 
 function Copyright(props: any) {

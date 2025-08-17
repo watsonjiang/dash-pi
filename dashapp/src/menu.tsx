@@ -20,7 +20,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="CPU" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton component={Link} to="/admin/wifi">
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>

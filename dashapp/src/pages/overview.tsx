@@ -2,10 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { getLoadAvg } from "../api";
 import React from "react";
 
-const LoadGauge1: React.FC = () => {
-  return <></>;
-};
-
 /**
  * overview 页面
  */
@@ -41,7 +37,6 @@ const Overview: React.FC = () => {
       <p>
         load average: {load1m} {load5m} {load10m}
       </p>
-      <LoadGauge1></LoadGauge1>
     </>
   );
 };
