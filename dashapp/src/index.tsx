@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DashLayout from "./layouts/dashLayout";
 import { Overview } from "./pages/overview";
 import { CpuDetail } from "./pages/cpu";
+import { LoginPage } from "./pages/login";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
             Component: CpuDetail,
           },
         ],
+      },
+      {
+        path: "/login",
+        Component: LoginPage,
       },
     ],
   },
