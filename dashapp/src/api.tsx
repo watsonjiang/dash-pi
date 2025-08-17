@@ -103,6 +103,6 @@ export type LoadAvgDto = {
 };
 
 export const getLoadAvg = async (): Promise<LoadAvgDto> => {
-  const rsp = await getAction<LoadAvgDto>("/loadavg");
+  const rsp = await getAction<LoadAvgDto>("/load_avg");
   return rsp.data.data;
 };

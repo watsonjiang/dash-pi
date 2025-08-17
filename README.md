@@ -7,6 +7,17 @@ dashboard for raspberry pi
 - reactjs + antd
 - flask
 
+# dev
+
+```
+dashapp>export DANGEROUSLY_DISABLE_HOST_CHECK=true
+dashapp>yarn start
+```
+
+```
+dashsvr>flask --app dashpi run -h 0.0.0.0
+```
+
 # build
 
 - dashapp
@@ -26,4 +37,10 @@ dashsvr> python -m build --wheel
 
 ```
 pip install dashpi-1.0.0-py2.py3-none-any.whl
+```
+
+# run
+
+```
+flask --app dashpi run -h 0.0.0.0
 ```

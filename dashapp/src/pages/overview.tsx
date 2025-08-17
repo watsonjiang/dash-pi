@@ -1,26 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { getLoadAvg } from "../api";
+import React from "react";
 
 const LoadGauge1: React.FC = () => {
-  const config = {
-    title: {
-      visible: true,
-      text: "刻度仪表盘",
-    },
-    width: 400,
-    height: 400,
-    value: 40,
-    min: 0,
-    max: 100,
-    range: [0, 25, 50, 75, 100],
-    statistic: {
-      visible: true,
-      text: "良",
-      color: "#faad14",
-    },
-    color: ["#39B8FF", "#52619B", "#43E089", "#C0EDF3"],
-  };
-
   return <></>;
 };
 
@@ -34,7 +16,7 @@ const Overview: React.FC = () => {
   const [load10m, setLoad10m] = useState(-1);
 
   const refresh = useCallback(() => {
-    const p = async () => {
+    (async () => {
       try {
         const loadAvg = await getLoadAvg();
         setLoad1m(loadAvg.load1m);
@@ -43,9 +25,7 @@ const Overview: React.FC = () => {
       } catch (e: any) {
         //忽略异常, 框架已经有提示了.
       }
-    };
-
-    p();
+    })();
   }, []);
 
   useEffect(() => {

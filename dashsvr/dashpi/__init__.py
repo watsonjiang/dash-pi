@@ -21,14 +21,14 @@ def create_app(test_config=None):
 
     @app.route('/static/js/<path:path>')
     def js(path):
-        return send_from_directory('static/static/js', path) 
+        return send_from_directory('../static/static/js', path)
     
     @app.route('/static/css/<path:path>')
     def css(path):
-        return send_from_directory('static/static/css', path)
+        return send_from_directory('../static/static/css', path)
 
     @app.route('/<path:path>')
     def index(path):
-        return send_from_directory('static', 'index.html')    
+        return send_from_directory('../static', 'index.html')
 
     return app
