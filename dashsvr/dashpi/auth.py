@@ -7,7 +7,7 @@ from flask import Flask, Blueprint, redirect, url_for, request, jsonify
 from flask_login import UserMixin, LoginManager, login_required, logout_user, login_user, current_user
 
 from .exc import DashException
-from .utils import success_response
+from .utils import success_response, make_response
 
 
 @dataclass
@@ -22,6 +22,11 @@ login_manager = LoginManager()
 @login_manager.user_loader
 def load_user(user_id):
     return DashUser(user_id, 'watson') if user_id == '1' else None
+
+
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    return jsonify(make_response(401, 'Unauthorized', None))
 
 
 bp = Blueprint('auth', __name__, url_prefix='/')

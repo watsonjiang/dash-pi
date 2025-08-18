@@ -1,5 +1,6 @@
 import json
 
+from cachelib import FileSystemCache
 from flask import Flask, send_from_directory
 from flask_session import Session
 
@@ -22,7 +23,8 @@ def create_app(test_config=None):
     app.config['SECRET_KEY'] = b"1233221"
     app.config['SESSION_COOKIE_NAME'] = 'dash_session'
     app.config['SESSION_PERMANENT'] = False
-    app.config['SESSION_TYPE'] = 'filesystem'
+    app.config['SESSION_TYPE'] = 'cachelib'
+    app.config['SESSION_CACHELIB'] = FileSystemCache(cache_dir='flask_session', threshold=500)
     Session(app)
     bind_auth(app)
     app.register_error_handler(DashException, handle_dash_exc)
